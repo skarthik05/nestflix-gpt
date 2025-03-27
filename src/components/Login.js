@@ -1,16 +1,15 @@
 import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../config/firebase.config';
 import { addUser } from '../utils/store/userSlice';
 import { validateFormData } from '../utils/formValidation.util';
 import Header from './Header'
+import { BG_URL, USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     
     const name = useRef(null);
@@ -35,9 +34,8 @@ const Login = () => {
                 uid: userId, 
                 email: userEmail, 
                 displayName: userName, 
-                photoURL: userPhoto 
+                photoURL: USER_AVATAR 
             }));
-            navigate('/browse');
         } catch (error) {
             setErrorMessage(`${error.code}-${error.message}`);
         }
@@ -50,7 +48,6 @@ const Login = () => {
                 email.current.value, 
                 password.current.value
             );
-            navigate('/browse');
         } catch (error) {
             setErrorMessage(`${error.code}-${error.message}`);
         }
@@ -79,7 +76,7 @@ const Login = () => {
             <Header />
             <div className='absolute'>
                 <img
-                    src="https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg" 
+                    src={BG_URL}
                     alt='bg-image' 
                 />
             </div>
